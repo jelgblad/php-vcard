@@ -14,3 +14,13 @@ $vcard->createProp('N', ['Elgblad', 'Jonas']);
 $vcard->createProp('URL', 'https://github.com/jelgblad')->createParam('TYPE', 'github');
 
 echo $vcard;
+
+// Will generate this output:
+/*
+BEGIN:VCARD
+VERSION:3.0
+FN:Jonas Elgblad
+N:Elgblad;Jonas
+URL;TYPE=github:https://github.com/jelgblad
+END:VCARD
+*/

@@ -1,8 +1,10 @@
 # composer
-composer.phar
 composer.lock
 /vendor/
 
 # phpunit
 phpunit.xml
 .phpunit.result.cache
+
+# PHAR files
+*.phar

@@ -20,8 +20,6 @@ class VCardPropertyParameter
       return '"' . $value . '"';
     }
 
-    //TODO: Escape chars instead of adding quotes
-
     return $value;
   }
 

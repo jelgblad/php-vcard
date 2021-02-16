@@ -13,6 +13,7 @@ class VCardProperty
     $value = mb_ereg_replace('\x{005C}', '\\\\', $value);
     $value = mb_ereg_replace('\x{002C}', '\,', $value);
     $value = mb_ereg_replace('\x{003B}', '\;', $value);
+    $value = mb_ereg_replace('\x{000A}', '\n', $value);
 
     return $value;
   }

@@ -6,7 +6,7 @@ class VCard
 {
 
   const VCARD_3 = '3.0';      // https://tools.ietf.org/html/rfc2425
-  // https://tools.ietf.org/html/rfc2426
+                              // https://tools.ietf.org/html/rfc2426
   const VCARD_4 = '4.0';      // https://tools.ietf.org/html/rfc6350
 
   // TODO: Add 

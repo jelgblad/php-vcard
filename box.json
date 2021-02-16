@@ -1,0 +1,8 @@
+{
+  "main": false,
+  "stub": "phar-bootstrap.php",
+  "output": "vcard.phar",
+  "directories": [
+    "src"
+  ]
+}

@@ -39,16 +39,15 @@ jobs:
     - name: Run test suite
       run: composer run-script test
     
-    - name: Build phar
+    - name: Build PHAR with BOX
       run: |
         wget \
-          "https://github.com/clue/phar-composer/releases/download/v1.2.0/phar-composer-1.2.0.phar" \
+          "https://github.com/box-project/box/releases/download/3.11.1/box.phar" \
           --quiet \
-          -O ./phar-composer
-        chmod +x ./phar-composer
-        sudo mv ./phar-composer /usr/local/bin
-        composer install --no-dev
-        phar-composer build .
+          -O ./box
+        chmod +x ./box
+        sudo mv ./box /usr/local/bin
+        box compile
     
     - name: Create Release
       id: create_release

@@ -183,7 +183,7 @@ class VCard
     if ($opt_enforce_required) {
       foreach ($props_required as $type) {
         if (!in_array($type, $props_used)) {
-          throw new Exception("VCard: Required property '${type}' is missing.");
+          throw new \Exception("VCard: Required property '${type}' is missing.");
         }
       }
     }
@@ -219,7 +219,7 @@ class VCard
 
       // TODO: Print to error_log and return.
 
-      throw new Exception("VCard: Can't add property with reserved type '${prop_type}'.");
+      throw new \Exception("VCard: Can't add property with reserved type '${prop_type}'.");
     }
 
     $custom_proptype_prefix = $this->options['custom_proptype_prefix'];
@@ -228,7 +228,7 @@ class VCard
       !isset($this->schema[$prop_type]) &&
       substr($prop_type, 0, strlen($custom_proptype_prefix)) !== $custom_proptype_prefix
     ) {
-      throw new Exception("VCard: Can't add property with unknown type '${prop_type}'. Custom property types must be prefixed with '${custom_proptype_prefix}'.");
+      throw new \Exception("VCard: Can't add property with unknown type '${prop_type}'. Custom property types must be prefixed with '${custom_proptype_prefix}'.");
     }
 
     if (empty($this->properties[$prop->type]) || !is_array($this->properties[$prop->type]) || $single) {

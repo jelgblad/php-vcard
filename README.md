@@ -1,2 +1,2 @@
 # php-vcard
-vCard implementation for PHP
+A vCard implementation for PHP

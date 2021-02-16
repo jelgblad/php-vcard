@@ -1,0 +1,76 @@
+name: release
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: olegtarasov/get-tag@v2.1
+      id: tagName
+      with:
+        tagRegex: "v(?<version>.*)"
+    
+    - name: Set Environment Variables
+      uses: allenevans/set-env@v1.0.0
+      with:
+        BOX_VERSION: '3.8.4'
+
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Run test suite
+      run: composer run-script test
+    
+    - name: Install Box
+      run: |
+        wget \
+          "https://github.com/humbug/box/releases/download/${BOX_VERSION}/box.phar" \
+          --quiet \
+          -O ./box
+        chmod +x ./box
+        sudo mv ./box /usr/local/bin
+        
+    - name: Build Application PHAR
+      run: .github/build-phar.sh
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ steps.tagName.outputs.version }}
+    - name: Upload Release Asset
+      id: upload_release_asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./archive.phar
+        asset_name: vcard.phar
+      

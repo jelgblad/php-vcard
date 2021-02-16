@@ -4,6 +4,7 @@ namespace jelgblad\VCard\Tests;
 
 use PHPUnit\Framework\TestCase;
 use jelgblad\VCard\VCard;
+use jelgblad\VCard\VCardProperty;
 
 final class VCardTest extends TestCase
 {
@@ -15,10 +16,79 @@ final class VCardTest extends TestCase
         );
     }
 
+
     public function testCannotBeCreatedWithInvalidVersion(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
         new VCard(['version' => 'invalid']);
+    }
+
+
+    public function testCannotAddPropWithIllegalType(): void
+    {
+        $vcard = new VCard();
+        $prop = new VCardProperty($vcard, 'BEGIN', 'value'); // 'BEGIN' type name is illegal
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $vcard->addProp($prop);
+    }
+
+
+    public function testCannotAddCustomTypeWithoutPrefix(): void
+    {
+        $vcard = new VCard();
+        $prop = new VCardProperty($vcard, 'MYTYPE', 'value'); // 'MYTYPE' type name is not defined in spec.
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $vcard->addProp($prop);
+    }
+
+
+    public function testCanAddCustomTypeWithPrefix(): void
+    {
+        $vcard = new VCard();
+        $prop = new VCardProperty($vcard, 'X-MYTYPE', 'value'); // 'X-MYTYPE' type name is not defined in spec.
+
+        $vcard->addProp($prop);
+
+        $this->assertTrue(true);
+    }
+
+
+    public function testCanAddCustomTypeWithCustomPrefix(): void
+    {
+        $vcard = new VCard([
+            'custom_proptype_prefix' => 'CUSTOM-'
+        ]);
+        $prop = new VCardProperty($vcard, 'CUSTOM-MYTYPE', 'value'); // 'CUSTOM-MYTYPE' type name is not defined in spec.
+
+        $vcard->addProp($prop);
+
+        $this->assertTrue(true);
+    }
+
+
+    public function testCannotOutputWithoutRequiredProps(): void
+    {
+        $vcard = new VCard();
+
+        $this->expectException(\Exception::class);
+
+        $vcard->getString();
+    }
+
+
+    public function testCanOutputWithoutRequiredPropsIfEnforceDisabled(): void
+    {
+        $vcard = new VCard([
+            'enforce_required_props' => FALSE
+        ]);
+
+        $vcard->getString();
+
+        $this->assertTrue(true);
     }
 }

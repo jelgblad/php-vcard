@@ -118,11 +118,19 @@ class VCardProperty
       }
     }
 
-    // Type definition
-    $schema_type = $this->vcard->schema[$this->type];
+    // Default value delimiter
+    $delimiter = ' ';
 
-    // Type value delimiter
-    $delimiter = isset($schema_type['delimiter']) ? $schema_type['delimiter'] : ' ';
+    if (array_key_exists($this->type, $this->vcard->schema)) {
+
+      // Type definition
+      $schema_type = $this->vcard->schema[$this->type];
+
+      // Type-specific value delimiter
+      if (isset($schema_type['delimiter'])) {
+        $delimiter = $schema_type['delimiter'];
+      }
+    }
 
     for ($i = 0; $i < $num_of_values = count($this->values); $i++) {
 

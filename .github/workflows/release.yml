@@ -39,7 +39,7 @@ jobs:
     - name: Run test suite
       run: composer run-script test
     
-    - name: Install Box
+    - name: Build phar
       run: |
         wget \
           "https://github.com/clue/phar-composer/releases/download/v1.2.0/phar-composer-1.2.0.phar" \

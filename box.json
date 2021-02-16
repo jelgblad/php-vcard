@@ -1,8 +1,10 @@
 {
   "main": false,
-  "stub": "phar-bootstrap.php",
-  "output": "vcard.phar",
+  "stub": "../phar-bootstrap.php",
+  "output": "../vcard.phar",
+  "base-path": "src",
   "directories": [
-    "src"
-  ]
+    "."
+  ],
+  "dump-autoload": false
 }

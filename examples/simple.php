@@ -1,7 +1,7 @@
 <?php
 
-// Example autoloader; replace this with your own (or the one included in Composer)
-require '_autoload.php';
+// Example using PHAR-bundle, get latest from https://github.com/jelgblad/php-vcard/releases
+require 'vcard.phar';
 
 use jelgblad\VCard\VCard;
 

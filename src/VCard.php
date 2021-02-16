@@ -9,7 +9,9 @@ class VCard
                               // https://tools.ietf.org/html/rfc2426
   const VCARD_4 = '4.0';      // https://tools.ietf.org/html/rfc6350
 
-  // TODO: Add 
+  // TODO: Replace 'required' with 'cardinality'
+  // https://tools.ietf.org/html/rfc6350#section-3.3
+
   const VCARD_VERSIONS = [
 
     /* vCard version schemas in ascending order.
@@ -171,6 +173,9 @@ class VCard
     $props_used = array();
     $props_required = array();
 
+    // TODO: Replace 'required' with option to enforce cardinalities
+    // https://tools.ietf.org/html/rfc6350#section-3.3
+    
     if ($opt_enforce_required) {
       foreach ($this->schema as $type => $def) {
         if (isset($def['required']) && $def['required'] === TRUE) {

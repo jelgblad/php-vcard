@@ -1,0 +1,19 @@
+{
+    "name": "jelgblad/vcard",
+    "description": "A vCard implementation for PHP",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "jelgblad\\VCard\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "jelgblad\\VCard\\Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

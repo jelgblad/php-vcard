@@ -124,6 +124,13 @@ class VCard
 
 
 
+  public function __toString()
+  {
+    return $this->getString();
+  }
+
+
+
   private function validateOptions()
   {
 

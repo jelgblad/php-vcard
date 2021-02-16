@@ -45,6 +45,13 @@ class VCardProperty
 
 
 
+  public function __toString()
+  {
+    return $this->getString();
+  }
+
+
+
   public function addValue(string $value)
   {
 

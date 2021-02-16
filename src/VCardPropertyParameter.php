@@ -50,6 +50,13 @@ class VCardPropertyParameter
 
 
 
+  public function __toString()
+  {
+    return $this->getString();
+  }
+
+
+
   /**
    * Add value to property parameter
    *

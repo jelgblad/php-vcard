@@ -13,7 +13,7 @@ final class VCardPropertyTest extends TestCase
         $this->vcard = new VCard();
     }
 
-    public function testCanCeate(): void
+    public function testCanBeCreated(): void
     {
         $this->assertInstanceOf(
             VCardProperty::class,

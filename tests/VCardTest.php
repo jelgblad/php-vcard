@@ -7,7 +7,7 @@ use jelgblad\VCard\VCard;
 
 final class VCardTest extends TestCase
 {
-    public function testCanCeateWithDefaultOptions(): void
+    public function testCanBeCreatedWithDefaultOptions(): void
     {
         $this->assertInstanceOf(
             VCard::class,

@@ -13,7 +13,16 @@
             "jelgblad\\VCard\\Tests\\": "tests"
         }
     },
+    "scripts": {
+        "test": [
+            "@phpunit",
+            "@phpstan"
+        ],
+        "phpunit": "phpunit",
+        "phpstan": "phpstan analyse src --memory-limit=-1"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^0.12.76"
     }
 }

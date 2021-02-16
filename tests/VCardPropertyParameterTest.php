@@ -15,7 +15,7 @@ final class VCardPropertyParameterTest extends TestCase
         $this->property = new VCardProperty($this->vcard, 'TYPE', 'val');
     }
 
-    public function testCanCeate(): void
+    public function testCanBeCreated(): void
     {
         $this->assertInstanceOf(
             VCardPropertyParameter::class,

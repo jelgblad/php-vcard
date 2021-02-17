@@ -83,8 +83,8 @@ class VCardProperty
   /**
    * Create new parameter instance and add it to the property object.
    * 
-   * @param   VCardProperty   $prop       vCard property object.
-   * @param   array|string    $values     Parameter values.
+   * @param   string          $param_type   Parameter type name.
+   * @param   array|string    $values       Parameter values.
    * 
    * @return VCardPropertyParameter
    */

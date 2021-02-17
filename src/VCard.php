@@ -32,10 +32,10 @@ class VCard
       'SOURCE' => [],
       'NAME' => [],
       'FN' => [
-        'cardinality' => '1*'
+        'cardinality' => '1*'   // Marked as REQUIRED in vCard 3.0
       ],
       'N' => [
-        'cardinality' => '1*',
+        'cardinality' => '1*',  // Marked as REQUIRED in vCard 3.0
         'delimiter' => ';'
       ],
       'NICKNAME' => [],
@@ -135,16 +135,6 @@ class VCard
       }
     }
 
-    $schema = array_map(function ($type_def) {
-
-      // Set default cardinality
-      if (!isset($type_def['cardinality'])) {
-        $type_def['cardinality'] = '*';
-      }
-
-      return $type_def;
-    }, $schema);
-
     return $schema;
   }
 
@@ -217,7 +207,7 @@ class VCard
 
     if ($opt_enforce_cardinality) {
       foreach ($this->schema as $type => $def) {
-        if ($def['cardinality'][0] === '1') {
+        if (isset($def['cardinality']) && $def['cardinality'][0] === '1') {
           $props_required[] = $type;
         }
       }
@@ -230,13 +220,14 @@ class VCard
     $buffer .= "VERSION:{$this->options['version']}\n";
 
     // Write property values to $buffer
-    foreach ($this->properties as $key => $instances) {
+    foreach ($this->properties as $prop_type => $instances) {
       foreach ($instances as $prop) {
+
         $output = $prop->getString();
         $buffer .= $output;
 
         if (!empty($output)) {
-          $props_used[] = $key;
+          $props_used[] = $prop_type;
         }
       }
     }
@@ -268,34 +259,6 @@ class VCard
    */
   public function addProp(VCardProperty $prop, bool $single = FALSE): VCardProperty
   {
-
-    // $schema = $this->getSchema();
-
-    $prop_type = $prop->type;
-
-    // Illegal prop_types
-    $illegal = [
-      'BEGIN',
-      'END',
-      'VERSION'
-    ];
-
-    if (in_array($prop_type, $illegal)) {
-
-      // TODO: Print to error_log and return.
-
-      throw new \InvalidArgumentException("VCard: Can't add property with reserved type '${prop_type}'.");
-    }
-
-    $custom_proptype_prefix = $this->options['custom_proptype_prefix'];
-
-    if (
-      !isset($this->schema[$prop_type]) &&
-      substr($prop_type, 0, strlen($custom_proptype_prefix)) !== $custom_proptype_prefix
-    ) {
-      throw new \InvalidArgumentException("VCard: Can't add property with unknown type '${prop_type}'. Custom property types must be prefixed with '${custom_proptype_prefix}'.");
-    }
-
     if (empty($this->properties[$prop->type]) || !is_array($this->properties[$prop->type]) || $single) {
       $this->properties[$prop->type] = array();
     }

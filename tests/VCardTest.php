@@ -25,28 +25,6 @@ final class VCardTest extends TestCase
     }
 
 
-    public function testCannotAddPropWithIllegalType(): void
-    {
-        $vcard = new VCard();
-        $prop = new VCardProperty($vcard, 'BEGIN', 'value'); // 'BEGIN' type name is illegal
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        $vcard->addProp($prop);
-    }
-
-
-    public function testCannotAddCustomTypeWithoutPrefix(): void
-    {
-        $vcard = new VCard();
-        $prop = new VCardProperty($vcard, 'MYTYPE', 'value'); // 'MYTYPE' type name is not defined in spec.
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        $vcard->addProp($prop);
-    }
-
-
     public function testCanAddCustomTypeWithPrefix(): void
     {
         $vcard = new VCard();

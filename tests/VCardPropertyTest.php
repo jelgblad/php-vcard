@@ -27,7 +27,7 @@ final class VCardPropertyTest extends TestCase
     {
         $this->vcard->setOption('no_empty_props', TRUE);
 
-        $prop = new VCardProperty($this->vcard, 'TEST', '');
+        $prop = new VCardProperty($this->vcard, 'SOURCE', '');
 
         $this->assertEmpty($prop->getString());
     }
@@ -37,8 +37,28 @@ final class VCardPropertyTest extends TestCase
     {
         $this->vcard->setOption('no_empty_props', FALSE);
 
-        $prop = new VCardProperty($this->vcard, 'TEST', '');
+        $prop = new VCardProperty($this->vcard, 'SOURCE', '');
 
         $this->assertNotEmpty($prop->getString());
+    }
+
+
+    public function testCannotOutputPropOfIllegalType(): void
+    {
+        $prop = new VCardProperty($this->vcard, 'BEGIN', 'value'); // 'BEGIN' type name is illegal
+
+        $this->expectException(\Exception::class);
+
+        $prop->getString();
+    }
+
+
+    public function testCannotOutputCustomPropTypeWithoutPrefix(): void
+    {
+        $prop = new VCardProperty($this->vcard, 'MYTYPE', 'value'); // 'MYTYPE' type name is not defined in spec.
+
+        $this->expectException(\Exception::class);
+
+        $prop->getString();
     }
 }

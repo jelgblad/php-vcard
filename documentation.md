@@ -4,9 +4,7 @@
 
 ## class **VCard**
 
-### Methods
-
-#### __construct()
+### constructor: **__construct()**
 
 *Create new VCard-object.*
 
@@ -14,11 +12,11 @@
 public __construct(array|null $options) : void
 ```
 
-##### Parameters
+#### Parameters
 
 array|null **$options**
 
-*Optional array with options.*
+*Array with options.*
 
 | Key                    | Type   | Default | Description                                                              |
 | -----------------------|--------|-------- | ------------------------------------------------------------------------ |
@@ -27,66 +25,9 @@ array|null **$options**
 | enforce_cardinality    | bool   | true    | Throw error, when generating output, if cardinalities are not satisfied. |
 | custom_proptype_prefix | string | X-      | Allowed prefix for non-standard types.                                   |
 
+---
 
-#### **setOption**()
-
-*Set an option.*
-
-```
-public setOption(string $option, mixed $value) : void
-```
-
-##### Parameters
-
-string **$option**
-
-*See opssible options under `function __construct`.*
-
-mixed **$value**
-
-*New option value.*
-
-##### Return value
-
-void
-
-
-#### **getString**()
-
-*Get vCard as formatted string.*
-
-```
-public getString() : string
-```
-
-##### Return value
-
-string - vCard data.
-
-#### **setOption**()
-
-*Set an option.*
-
-```
-public setOption(string $option, mixed $value) : void
-```
-
-##### Parameters
-
-string **$option**
-
-*See opssible options under `function __construct`.*
-
-mixed **$value**
-
-*New option value.*
-
-##### Return value
-
-void
-
-
-#### **addProp**()
+### method: **addProp**()
 
 *Add a property instance to the vCard object.*
 
@@ -94,7 +35,7 @@ void
 public addProp(VCardProperty $prop, bool|null $single) : VCardProperty
 ```
 
-##### Parameters
+#### Parameters
 
 string **$prop**
 
@@ -104,12 +45,13 @@ bool|null **$single**
 
 *Single instance property. Replace other instances of same type.*
 
-##### Return value
+#### Return value
 
 VCardProperty
 
+---
 
-#### **createProp**()
+### method: **createProp**()
 
 *Create new property instance and add it to the vCard object.*
 
@@ -117,7 +59,7 @@ VCardProperty
 public createProp(string $prop_type, array|string $values, bool|null $single) : VCardProperty
 ```
 
-##### Parameters
+#### Parameters
 
 string **$prop_type**
 
@@ -131,6 +73,44 @@ bool|null **$single**
 
 *Single instance property. Replace other instances of same type.*
 
-##### Return value
+#### Return value
 
 VCardProperty
+
+---
+
+### method: **getString**()
+
+*Get vCard as formatted string.*
+
+```
+public getString() : string
+```
+
+#### Return value
+
+string - vCard data.
+
+---
+
+### method: **setOption**()
+
+*Set an option.*
+
+```
+public setOption(string $option, mixed $value) : void
+```
+
+#### Parameters
+
+string **$option**
+
+*See available options under `__construct()`.*
+
+mixed **$value**
+
+*New option value.*
+
+#### Return value
+
+void

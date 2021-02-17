@@ -105,9 +105,9 @@ class VCard
 
   static $default_options = [
     'version'                   => self::VCARD_3,   // vCard version 3.0
-    'no_empty_props'            => TRUE,            // Do not write properties to output without at least one value
-    'enforce_cardinality'       => TRUE,            // Throw error, when outputting, if cardinalities are not satisfied
-    'custom_proptype_prefix'    => 'X-'             // Allowed prefix for non-standard types
+    'no_empty_props'            => TRUE,            // Skip empty properties when generating output string.
+    'enforce_cardinality'       => TRUE,            // Throw error, when generating output, if cardinalities are not satisfied.
+    'custom_proptype_prefix'    => 'X-'             // Allowed prefix for non-standard types.
   ];
 
 

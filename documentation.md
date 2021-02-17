@@ -155,7 +155,7 @@ VCardProperty
 *Add a value to property.*
 
 ```
-public addValue(string $value)
+public addValue(string $value) : void
 ```
 
 #### Parameters
@@ -202,7 +202,7 @@ string **$param_type**
 
 *Parameter type name.*
 
-array|string **$values**
+array|string|null **$values**
 
 *Parameter values.*
 

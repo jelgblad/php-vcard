@@ -25,7 +25,7 @@ array|null **$options**
 | enforce_cardinality    | bool   | true    | Throw error, when generating output, if cardinalities are not satisfied. |
 | custom_proptype_prefix | string | X-      | Allowed prefix for non-standard types.                                   |
 
----
+
 
 ### method: **addProp**()
 
@@ -49,7 +49,7 @@ bool|null **$single**
 
 VCardProperty
 
----
+
 
 ### method: **createProp**()
 
@@ -77,7 +77,7 @@ bool|null **$single**
 
 VCardProperty
 
----
+
 
 ### method: **getString**()
 
@@ -91,7 +91,7 @@ public getString() : string
 
 string - vCard data.
 
----
+
 
 ### method: **setOption**()
 

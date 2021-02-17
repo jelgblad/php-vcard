@@ -9,24 +9,33 @@ class VCard
                               // https://tools.ietf.org/html/rfc2426
   const VCARD_4 = '4.0';      // https://tools.ietf.org/html/rfc6350
 
-  // TODO: Replace 'required' with 'cardinality'
-  // https://tools.ietf.org/html/rfc6350#section-3.3
-
   const VCARD_VERSIONS = [
 
     /* vCard version schemas in ascending order.
-       * New schemas inherits from previous.
-       * NULL unsets the property
-       */
+      * New schemas inherits from previous.
+      * NULL unsets the property from a previous version
+      * 
+      * Cardinality
+      * https://tools.ietf.org/html/rfc6350#section-3.3
+      * +-------------+--------------------------------------------------+
+      * | Cardinality | Meaning                                          |
+      * +-------------+--------------------------------------------------+
+      * |      1      | Exactly one instance per vCard MUST be present.  |
+      * |      *1     | Exactly one instance per vCard MAY be present.   |
+      * |      1*     | One or more instances per vCard MUST be present. |
+      * |      *      | One or more instances per vCard MAY be present.  |
+      * +-------------+--------------------------------------------------+
+      * Default cardinality is '*'.
+      */
 
     self::VCARD_3 => [
       'SOURCE' => [],
       'NAME' => [],
       'FN' => [
-        'required' => TRUE
+        'cardinality' => '1*'
       ],
       'N' => [
-        'required' => TRUE,
+        'cardinality' => '1*',
         'delimiter' => ';'
       ],
       'NICKNAME' => [],
@@ -58,25 +67,46 @@ class VCard
       'KEY' => []
     ],
 
-    // self::VCARD_4 => [
-    //     'FN' => [],
-    //     'NAME' => NULL,
-    //     'MAILER' => NULL,
-    //     'LABEL' => NULL,
-    //     'CLASS' => NULL,
-    //     'KIND' => [],
-    //     'GENDER' => [],
-    //     'LANG' => [],
-    //     'ANNIVERSARY' => [],
-    //     'XML' => [],
-    //     'CLIENTPIDMAP' => []
-    // ]
+    self::VCARD_4 => [
+      'N' => [
+        'cardinality' => '*1',
+        'delimiter' => ';'
+      ],
+      'NAME' => NULL,
+      'BDAY' => [
+        'cardinality' => '*1'
+      ],
+      'PRODID' => [
+        'cardinality' => '*1'
+      ],
+      'REV' => [
+        'cardinality' => '*1'
+      ],
+      'UID' => [
+        'cardinality' => '*1'
+      ],
+      'MAILER' => NULL,
+      'LABEL' => NULL,
+      'CLASS' => NULL,
+      'KIND' => [
+        'cardinality' => '*1'
+      ],
+      'GENDER' => [
+        'cardinality' => '*1'
+      ],
+      'LANG' => [],
+      'ANNIVERSARY' => [
+        'cardinality' => '*1'
+      ],
+      'XML' => [],
+      'CLIENTPIDMAP' => []
+    ]
   ];
 
   static $default_options = [
     'version'                   => self::VCARD_3,   // vCard version 3.0
     'no_empty_props'            => TRUE,            // Do not write properties to output without at least one value
-    'enforce_required_props'    => TRUE,            // Throw error, when outputting, if required property types are missing
+    'enforce_cardinality'       => TRUE,            // Throw error, when outputting, if cardinalities are not satisfied
     'custom_proptype_prefix'    => 'X-'             // Allowed prefix for non-standard types
   ];
 
@@ -104,6 +134,16 @@ class VCard
         break;
       }
     }
+
+    $schema = array_map(function ($type_def) {
+
+      // Set default cardinality
+      if (!isset($type_def['cardinality'])) {
+        $type_def['cardinality'] = '*';
+      }
+
+      return $type_def;
+    }, $schema);
 
     return $schema;
   }
@@ -168,17 +208,16 @@ class VCard
   {
 
     // Get options
-    $opt_enforce_required = $this->options['enforce_required_props'];
+    $opt_enforce_cardinality = $this->options['enforce_cardinality'];
 
     $props_used = array();
     $props_required = array();
 
-    // TODO: Replace 'required' with option to enforce cardinalities
-    // https://tools.ietf.org/html/rfc6350#section-3.3
-    
-    if ($opt_enforce_required) {
+    // TODO: Check other cardinalities besides 1 and 1*
+
+    if ($opt_enforce_cardinality) {
       foreach ($this->schema as $type => $def) {
-        if (isset($def['required']) && $def['required'] === TRUE) {
+        if ($def['cardinality'][0] === '1') {
           $props_required[] = $type;
         }
       }
@@ -206,7 +245,7 @@ class VCard
     $buffer .= "END:VCARD\n";
 
     // Check for required props
-    if ($opt_enforce_required) {
+    if ($opt_enforce_cardinality) {
       foreach ($props_required as $type) {
         if (!in_array($type, $props_used)) {
           throw new \Exception("VCard: Required property '${type}' is missing.");

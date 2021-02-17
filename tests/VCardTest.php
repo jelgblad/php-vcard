@@ -84,7 +84,7 @@ final class VCardTest extends TestCase
     public function testCanOutputWithoutRequiredPropsIfEnforceDisabled(): void
     {
         $vcard = new VCard([
-            'enforce_required_props' => FALSE
+            'enforce_cardinality' => FALSE
         ]);
 
         $vcard->getString();

@@ -27,7 +27,8 @@ array|null **$options**
 | enforce_cardinality    | bool   | true    | Throw error, when generating output, if cardinalities are not satisfied. |
 | custom_proptype_prefix | string | X-      | Allowed prefix for non-standard types.                                   |
 
-#### function **setOption**(string $option, $value)
+
+#### **setOption**()
 
 *Set an option.*
 
@@ -43,4 +44,93 @@ string **$option**
 
 mixed **$value**
 
-*New value.*
+*New option value.*
+
+##### Return value
+
+void
+
+
+#### **getString**()
+
+*Get vCard as formatted string.*
+
+```
+public getString() : string
+```
+
+##### Return value
+
+string - vCard data.
+
+#### **setOption**()
+
+*Set an option.*
+
+```
+public setOption(string $option, mixed $value) : void
+```
+
+##### Parameters
+
+string **$option**
+
+*See opssible options under `function __construct`.*
+
+mixed **$value**
+
+*New option value.*
+
+##### Return value
+
+void
+
+
+#### **addProp**()
+
+*Add a property instance to the vCard object.*
+
+```
+public addProp(VCardProperty $prop, bool|null $single) : VCardProperty
+```
+
+##### Parameters
+
+string **$prop**
+
+*vCard property object.*
+
+mixed **$single**
+
+*Single instance property. Replace other instances of same type.*
+
+##### Return value
+
+VCardProperty
+
+
+#### **createProp**()
+
+*Create new property instance and add it to the vCard object.*
+
+```
+public createProp(string $prop_type, array|string $values, bool|null $single) : VCardProperty
+```
+
+##### Parameters
+
+string **$prop_type**
+
+*Property type name.*
+
+array|string **$values**
+
+*Property values.*
+
+bool **$single**
+
+*Single instance property. Replace other instances of same type.*
+
+##### Return value
+
+VCardProperty

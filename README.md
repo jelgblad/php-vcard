@@ -28,3 +28,7 @@ echo $vcard;
 ```
 
 See more examples in the [examples directory](examples/).
+
+## API documentation
+
+Read the API documentation [here](documentation.md).

@@ -8,9 +8,9 @@
 
 Create new VCard-object.
 
-### Arguments
+#### Arguments
 
-#### array **$options**
+##### array **$options**
 
 | Key                    | Type   | Default | Description                                                              |
 | -----------------------|--------|-------- | ------------------------------------------------------------------------ |

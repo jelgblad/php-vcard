@@ -100,7 +100,7 @@ string **$prop**
 
 *vCard property object.*
 
-mixed **$single**
+bool|null **$single**
 
 *Single instance property. Replace other instances of same type.*
 
@@ -127,7 +127,7 @@ array|string **$values**
 
 *Property values.*
 
-bool **$single**
+bool|null **$single**
 
 *Single instance property. Replace other instances of same type.*
 

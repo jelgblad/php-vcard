@@ -3,13 +3,16 @@ A vCard implementation for PHP
 
 ## Install
 
+### Install with [Composer](https://getcomposer.org/)
+
+```
+composer require jelgblad/vcard
+```
+
 ### Install as PHP-archive (PHAR)
 1. Download latest from https://github.com/jelgblad/php-vcard/releases/latest.
 2. Copy `vcard.phar` to somwhere in your project directory.
 3. Include/require it as you would any other PHP-file: `require 'path/to/vcard.phar';`.
-
-### Install with [Composer](https://getcomposer.org/)
-> Not implemented yet.
 
 ## Example
 

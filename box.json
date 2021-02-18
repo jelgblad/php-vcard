@@ -6,5 +6,8 @@
   "directories": [
     "."
   ],
-  "dump-autoload": false
+  "dump-autoload": false,
+  "compactors": [
+    "KevinGH\\Box\\Compactor\\Php"
+  ]
 }

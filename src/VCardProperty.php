@@ -117,7 +117,7 @@ class VCardProperty
 
     // Check if prop type is illegal
     if (in_array($this->type, $illegal_prop_types)) {
-      throw new \Exception("VCard: Can't write property instance of reserved type '" . $this->type . "'.");
+      throw new Exceptions\InvalidPropertyException("VCard: Can't write property instance of reserved type '" . $this->type . "'.");
     }
 
     // Check if prop type is valid or prefixed
@@ -125,7 +125,7 @@ class VCardProperty
       !isset($this->vcard->schema[$this->type]) &&
       substr($this->type, 0, strlen($opt_custom_proptype_prefix)) !== $opt_custom_proptype_prefix
     ) {
-      throw new \Exception("VCard: Can't write property with unknown type '" . $this->type . "'. Custom property types must be prefixed with '${opt_custom_proptype_prefix}'.");
+      throw new Exceptions\InvalidPropertyException("VCard: Can't write property with unknown type '" . $this->type . "'. Custom property types must be prefixed with '${opt_custom_proptype_prefix}'.");
     }
 
     // Skip empty prop

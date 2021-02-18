@@ -5,6 +5,7 @@ namespace jelgblad\VCard\Tests;
 use PHPUnit\Framework\TestCase;
 use jelgblad\VCard\VCard;
 use jelgblad\VCard\VCardProperty;
+use jelgblad\VCard\Exceptions\CardinalityException;
 
 final class VCardTest extends TestCase
 {
@@ -14,6 +15,22 @@ final class VCardTest extends TestCase
             VCard::class,
             new VCard()
         );
+    }
+
+
+    public function testCanBeCreatedWithVersion3(): void
+    {
+        new VCard(['version' => '3.0']);
+
+        $this->assertTrue(true);
+    }
+
+
+    public function testCanBeCreatedWithVersion4(): void
+    {
+        new VCard(['version' => '4.0']);
+
+        $this->assertTrue(true);
     }
 
 
@@ -53,7 +70,7 @@ final class VCardTest extends TestCase
     {
         $vcard = new VCard();
 
-        $this->expectException(\Exception::class);
+        $this->expectException(CardinalityException::class);
 
         $vcard->getString();
     }

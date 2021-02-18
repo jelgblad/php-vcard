@@ -239,7 +239,7 @@ class VCard
     if ($opt_enforce_cardinality) {
       foreach ($props_required as $type) {
         if (!in_array($type, $props_used)) {
-          throw new \Exception("VCard: Required property '${type}' is missing.");
+          throw new Exceptions\CardinalityException("VCard: Required property '${type}' is missing.");
         }
       }
     }

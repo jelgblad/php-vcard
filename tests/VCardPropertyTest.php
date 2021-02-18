@@ -5,6 +5,7 @@ namespace jelgblad\VCard\Tests;
 use PHPUnit\Framework\TestCase;
 use jelgblad\VCard\VCard;
 use jelgblad\VCard\VCardProperty;
+use jelgblad\VCard\Exceptions\InvalidPropertyException;
 
 final class VCardPropertyTest extends TestCase
 {
@@ -47,7 +48,7 @@ final class VCardPropertyTest extends TestCase
     {
         $prop = new VCardProperty($this->vcard, 'BEGIN', 'value'); // 'BEGIN' type name is illegal
 
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidPropertyException::class);
 
         $prop->getString();
     }
@@ -57,7 +58,7 @@ final class VCardPropertyTest extends TestCase
     {
         $prop = new VCardProperty($this->vcard, 'MYTYPE', 'value'); // 'MYTYPE' type name is not defined in spec.
 
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidPropertyException::class);
 
         $prop->getString();
     }

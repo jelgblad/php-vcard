@@ -31,9 +31,21 @@ VCard
 
 
 
+### method: **__toString**()
+
+*Return class as a string. See **getString()**.*
+
+> **Warning** It was not possible to throw an exception from within a __toString() method before PHP 7.4.0. Doing so will result in a fatal error. See https://www.php.net/manual/en/language.oop5.magic.php#object.tostring.
+
+#### Return value
+
+string - Serialized vCard data.
+
+
+
 ### method: **addProp**()
 
-*Add a property instance to the vCard object.*
+*Add a property to the vCard.*
 
 ```
 public addProp(VCardProperty $prop, bool|null $single) : VCardProperty
@@ -41,9 +53,9 @@ public addProp(VCardProperty $prop, bool|null $single) : VCardProperty
 
 #### Parameters
 
-string **$prop**
+VCardProperty **$prop**
 
-*vCard property object.*
+*The property to add.*
 
 bool|null **$single**
 
@@ -57,7 +69,7 @@ VCardProperty
 
 ### method: **createProp**()
 
-*Create new property instance and add it to the vCard object.*
+*Create new property and add it to the vCard.*
 
 ```
 public createProp(string $prop_type, array|string $values, bool|null $single) : VCardProperty
@@ -67,11 +79,11 @@ public createProp(string $prop_type, array|string $values, bool|null $single) : 
 
 string **$prop_type**
 
-*Property type name.*
+*Name of vCard property type.*
 
 array|string **$values**
 
-*Property values.*
+*Value or values to assign to property.*
 
 bool|null **$single**
 
@@ -93,7 +105,7 @@ public getString() : string
 
 #### Return value
 
-string - vCard data.
+string - Serialized vCard data.
 
 
 
@@ -139,7 +151,7 @@ VCard **$vcard**
 
 string **$prop_type**
 
-*Name of property type.*
+*Name of vCard property type.*
 
 array|string **$values**
 
@@ -148,6 +160,19 @@ array|string **$values**
 #### Return value
 
 VCardProperty
+
+
+
+### method: **__toString**()
+
+*Return class as a string. See **getString()**.*
+
+> **Warning** It was not possible to throw an exception from within a __toString() method before PHP 7.4.0. Doing so will result in a fatal error. See https://www.php.net/manual/en/language.oop5.magic.php#object.tostring.
+
+#### Return value
+
+string - Serialized vCard property data.
+
 
 
 ### method: **addValue**()
@@ -169,9 +194,10 @@ string **$value**
 void
 
 
+
 ### method: **addParam**()
 
-*Add a parameter instance to the property object.*
+*Add a parameter to the vCard property.*
 
 ```
 public addParam(VCardPropertyParameter $param) : VCardPropertyParameter
@@ -181,16 +207,17 @@ public addParam(VCardPropertyParameter $param) : VCardPropertyParameter
 
 VCardPropertyParameter **$param**
 
-*Property type name.*
+*The parameter to add.*
 
 #### Return value
 
 VCardPropertyParameter
 
 
+
 ### method: **createParam**()
 
-*Create new parameter instance and add it to the property object.*
+*Create new parameter and add it to the vCard property.*
 
 ```
 public createParam(string $param_type, array|string|null $values) : VCardPropertyParameter
@@ -200,7 +227,7 @@ public createParam(string $param_type, array|string|null $values) : VCardPropert
 
 string **$param_type**
 
-*Parameter type name.*
+*Name of vCard property parameter type.*
 
 array|string|null **$values**
 
@@ -211,9 +238,10 @@ array|string|null **$values**
 VCardPropertyParameter
 
 
+
 ### method: **getString**()
 
-*Get property as formatted string.*
+*Get vCard property as formatted string.*
 
 ```
 public getString() : string
@@ -221,7 +249,8 @@ public getString() : string
 
 #### Return value
 
-string - vCard property data.
+string - Serialized vCard property data.
+
 
 
 ## class **VCardPropertyParameter**
@@ -242,7 +271,7 @@ VCardProperty **$property**
 
 string **$param_type**
 
-*Name of parameter type.*
+*Name of vCard property parameter type.*
 
 array|string|null **$values**
 
@@ -251,6 +280,19 @@ array|string|null **$values**
 #### Return value
 
 VCardPropertyParameter
+
+
+
+### method: **__toString**()
+
+*Return class as a string. See **getString()**.*
+
+> **Warning** It was not possible to throw an exception from within a __toString() method before PHP 7.4.0. Doing so will result in a fatal error. See https://www.php.net/manual/en/language.oop5.magic.php#object.tostring.
+
+#### Return value
+
+string - Serialized vCard property parameter data.
+
 
 
 ### method: **addValue**()
@@ -272,9 +314,10 @@ string **$value**
 void
 
 
+
 ### method: **getString**()
 
-*Get property parameter as formatted string.*
+*Get vCard property parameter as formatted string.*
 
 ```
 public getString() : string
@@ -282,4 +325,4 @@ public getString() : string
 
 #### Return value
 
-string - vCard property parameter data.
+string - Serialized vCard property parameter data.

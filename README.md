@@ -34,4 +34,4 @@ See more examples in the [examples directory](examples/).
 
 ## API documentation
 
-Read the API documentation [here](documentation.md).
+Read the API documentation [here](docs/documentation.md).

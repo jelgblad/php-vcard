@@ -5,6 +5,7 @@ require 'vcard.phar';
 
 use jelgblad\VCard\VCard;
 
+// Since .vcf-files can contain more than one vCard, VCard::parse() returns an array of all the parsed vCards.
 $vcards = VCard::parse(file_get_contents(__DIR__ . '/sample.vcf'));
 
 foreach ($vcards as $i => $vcard) {

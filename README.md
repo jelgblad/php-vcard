@@ -16,6 +16,7 @@ composer require jelgblad/vcard
 
 ## Example
 
+**Write a vCard**
 ```php
 use jelgblad\VCard\VCard;
 
@@ -28,6 +29,26 @@ $vcard->createProp('N', ['Elgblad', 'Jonas']);
 $vcard->createProp('URL', 'https://github.com/jelgblad')->createParam('TYPE', 'github');
 
 echo $vcard;
+```
+
+**Parse a vCard**
+```php
+use jelgblad\VCard\VCard;
+
+$input = '
+  BEGIN:VCARD
+  VERSION:4.0
+  FN:John Doe
+  N:Doe;John
+  END:VCARD';
+
+// Since .vcf-files can contain more than one vCard, VCard::parse() returns an array of all the parsed vCards.
+$vcards = VCard::parse($input);
+
+foreach ($vcards as $i => $vcard) {
+  printf("vCard %d:\n", $i + 1);
+  printf("Name: %s\n", $vcard->getProp('FN')->getValue());
+}
 ```
 
 See more examples in the [examples directory](examples/).

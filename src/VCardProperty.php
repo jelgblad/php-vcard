@@ -27,6 +27,108 @@ class VCardProperty
 
 
 
+  public static function parse(VCard $vcard, string $input): VCardProperty
+  {
+    // Trim input
+    $input = trim($input);
+
+    // Get index where value starts
+    $valueStartIndex = self::_parseGetValueStartIndex($input);
+
+    // Get property definition and property values
+    $definition = substr($input, 0, $valueStartIndex - 1);
+    $valuesString = substr($input, $valueStartIndex);
+
+    $definitionParts = self::_parseSplit(';', $definition);
+    $values = self::_parseSplit(';', $valuesString);
+
+    $propType = $definitionParts[0];
+    $paramStrings = array_slice($definitionParts, 1);
+
+    // Crate VCardProperty
+    $prop = new VCardProperty($vcard, $propType,  $values);
+
+    // Loop params
+    foreach ($paramStrings as $paramString) {
+
+      // Parse a property parameter
+      $param = VCardPropertyParameter::parse($prop, $paramString);
+
+      $prop->addParam($param);
+    }
+
+    return $prop;
+  }
+
+
+
+  private static function _parseGetValueStartIndex(string $input): int
+  {
+    $chars = str_split($input);
+
+    $inQuotes = false;
+
+    // Loop chars and find index where value begins
+    for ($i = 1; $i < count($chars); $i++) {
+
+      $char = $chars[$i];
+
+      if ($inQuotes && $char === '"' && $chars[$i - 1] !== '\\') {
+        $inQuotes = false;
+      } else if (!$inQuotes && $char === '"' && $i - 1 >= 0 && $chars[$i - 1] !== '\\') {
+        $inQuotes = true;
+      }
+
+      if ($inQuotes) {
+        continue;
+      }
+
+      if ($char === ':' && $chars[$i - 1] !== '\\') {
+        // Value starts at next index
+        return $i + 1;
+      }
+    }
+
+    return 0;
+  }
+
+
+
+  private static function _parseSplit(string $delimiter, string $input): array
+  {
+    $chars = str_split($input);
+
+    $inQuotes = false;
+
+    $parts = [];
+    $buffer = [];
+
+    // Loop chars and find index where value begins
+    for ($i = 0; $i < count($chars); $i++) {
+
+      $char = $chars[$i];
+
+      if ($inQuotes && $char === '"') {
+        $inQuotes = false;
+      } else if (!$inQuotes && $char === '"') {
+        $inQuotes = true;
+      }
+
+      if (!$inQuotes && $char === $delimiter && $i - 1 >= 0 && $chars[$i - 1] !== '\\') {
+        $parts[] = join('', $buffer);
+        $buffer = [];
+      } else {
+        $buffer[] = $char;
+      }
+    }
+
+    $parts[] = join('', $buffer);
+
+    return $parts;
+  }
+
+
+
   function __construct(VCard $vcard, string $prop_type, $values)
   {
 

@@ -140,6 +140,44 @@ class VCard
 
 
 
+  public static function parse(string $input): VCard
+  {
+    // Trim input
+    $input = trim($input);
+
+    // Crate vCard
+    $vcard = new VCard();
+
+    // Loop lines
+    foreach (explode("\n", $input) as $lineString) {
+
+      // Parse a property
+      $prop = VCardProperty::parse($vcard, $lineString);
+
+      // if (
+      //   $prop->type === 'BEGIN' ||
+      //   $prop->type === 'END' ||
+      //   $prop->type === 'VERSION'
+      // ) {
+      //   continue;
+      // }
+
+      switch ($prop->type) {
+        case 'VERSION':
+          $vcard->setOption('version', $prop->values[0]);
+        case 'BEGIN':
+        case 'END':
+          break;
+        default:
+          $vcard->addProp($prop);
+      }
+    }
+
+    return $vcard;
+  }
+
+
+
   function __construct(array $options = NULL)
   {
 
@@ -185,6 +223,10 @@ class VCard
   {
     $this->options[$option] = $value;
     $this->validateOptions();
+
+    if ($option === 'version') {
+      $this->schema = self::getSchema($this->options['version']);
+    }
   }
 
 

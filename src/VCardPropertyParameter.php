@@ -31,6 +31,72 @@ class VCardPropertyParameter
 
 
 
+  public static function parse(VCardProperty $prop, string $input): VCardPropertyParameter
+  {
+    // Trim input
+    $input = trim($input);
+
+    $parts = explode('=', $input, 2);
+
+    $values = [];
+
+    if (isset($parts[1])) {
+      $values = self::_paseSplitValues($parts[1]);
+    }
+  
+    // Crate VCardPropertyParameter
+    $param = new VCardPropertyParameter($prop, $parts[0], $values);
+
+    return $param;
+  }
+
+
+
+  private static function _paseSplitValues(string $input): array
+  {
+    $chars = str_split($input);
+
+    $inQuotes = false;
+
+    $parts = [];
+    $buffer = [];
+
+    // Loop chars and find index where value begins
+    for ($i = 0; $i < count($chars); $i++) {
+
+      $char = $chars[$i];
+
+      if ($inQuotes && $char === '"' && $chars[$i - 1] !== '\\') {
+        $inQuotes = false;
+      } else if (!$inQuotes && $char === '"' && $i - 1 >= 0 && $chars[$i - 1] !== '\\') {
+        $inQuotes = true;
+      }
+
+      if (!$inQuotes && $char === ',' && $chars[$i - 1] !== '\\') {
+        $parts[] = join('', $buffer);
+        $buffer = [];
+      } else {
+        $buffer[] = $char;
+      }
+    }
+
+    $parts[] = join('', $buffer);
+    
+    $parts = array_map(function ($part) {
+
+      // Remove quotes around string
+      if (substr($part, 0, 1) === '"' && substr($part, strlen($part)-1, 1) === '"') {
+        $part = substr($part, 1, strlen($part)-2);
+      }
+
+      return $part;
+    }, $parts);
+
+    return $parts;
+  }
+
+
+
   function __construct(VCardProperty $property, string $param_type, $values = NULL)
   {
 
@@ -65,6 +131,10 @@ class VCardPropertyParameter
   {
 
     // TODO: throw error if not string
+
+    // if (mb_strpos($value, '"')) {
+    //   throw new \Exception("VCard: Quotation mark ('\"') character not allowed in parameter value.");
+    // }
 
     array_push($this->values, $value);
   }

@@ -286,4 +286,44 @@ class VCard
 
     return $this->addProp($prop, $single);
   }
+
+
+  /**
+   * Get single property from vCard.
+   * 
+   * @param   string      $prop_type  Name of vCard property type.
+   * @param   int|null    $index      Index of property instance to get.
+   * 
+   * @return VCardProperty|null
+   */
+  public function getProp(string $prop_type, $index = 0): VCardProperty
+  {
+    $props = $this->getProps($prop_type);
+    
+    return count($props) > $index ? $props[$index] : null;
+  }
+
+
+  /**
+   * Get properties from vCard.
+   * 
+   * @param   string|null     $prop_type  Name of vCard property type.
+   * 
+   * @return VCardProperty[]
+   */
+  public function getProps(string $prop_type = null): array
+  {
+    $props = [];
+
+    foreach ($this->properties as $type => $propsOfType) {
+
+      if (!empty($prop_type) && $prop_type !== $type) {
+        continue;
+      }
+
+      $props = array_merge($props, $propsOfType);
+    }
+
+    return $props;
+  }
 }

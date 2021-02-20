@@ -94,6 +94,48 @@ bool|null **$single**
 VCardProperty
 
 
+### method: **getProp**()
+
+*Get single property from vCard.*
+
+```
+public getProp(string $prop_type, int|null $index) : VCardProperty|null
+```
+
+#### Parameters
+
+string **$prop_type**
+
+*Name of vCard property type.*
+
+string **$index** = 0
+
+*Index of property instance to get.*
+
+#### Return value
+
+VCardProperty|null
+
+
+### method: **getProps**()
+
+*Get properties from vCard.*
+
+```
+public getProps(string|null $prop_type) : VCardProperty[]
+```
+
+#### Parameters
+
+string **$prop_type**
+
+*Name of vCard property type.*
+
+#### Return value
+
+VCardProperty[]
+
+
 
 ### method: **getString**()
 
@@ -238,6 +280,69 @@ array|string|null **$values**
 VCardPropertyParameter
 
 
+### method: **getValue**()
+
+*Get single value from vCard property.*
+
+```
+public getValue() : string
+```
+
+#### Parameters
+
+int|null **$index** = 0
+
+*Index of value to get.*
+
+#### Return value
+
+string
+
+
+### method: **getValues**()
+
+*Get values from vCard property.*
+
+```
+public getValues() : string[]
+```
+
+#### Return value
+
+string[]
+
+
+### method: **getParam**()
+
+*Get single parameter from vCard property.*
+
+```
+public getParam(string $param_type) : VCardPropertyParameter|null
+```
+
+#### Parameters
+
+string **$param_type**
+
+*Name of vCard property parameter type.*
+
+#### Return value
+
+VCardProperty|null
+
+
+### method: **getParams**()
+
+*Get parameters from vCard property.*
+
+```
+public getParams() : VCardPropertyParameter[]
+```
+
+#### Return value
+
+VCardPropertyParameter[]
+
 
 ### method: **getString**()
 
@@ -312,6 +417,38 @@ string **$value**
 #### Return value
 
 void
+
+
+### method: **getValue**()
+
+*Get single value from vCard property parameter.*
+
+```
+public getValue(int|null $index = 0) : string
+```
+
+#### Parameters
+
+int|null **$index** = 0
+
+*Index of value to get.*
+
+#### Return value
+
+string
+
+
+### method: **getValues**()
+
+*Get values from vCard property parameter.*
+
+```
+public getValues() : string[]
+```
+
+#### Return value
+
+string[]
 
 
 

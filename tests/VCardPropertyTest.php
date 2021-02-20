@@ -62,4 +62,47 @@ final class VCardPropertyTest extends TestCase
 
         $prop->getString();
     }
+
+
+    public function testCanGetValue(): void
+    {
+        $prop = $this->vcard->createProp('TEL', ['example value 1', 'example value 2']);
+
+        $this->assertEquals('example value 1', $prop->getValue());
+        $this->assertEquals('example value 1', $prop->getValue(0));
+        $this->assertEquals('example value 2', $prop->getValue(1));
+    }
+
+
+    public function testCanGetAllValues(): void
+    {
+        $prop = $this->vcard->createProp('TEL', ['example value 1', 'example value 2']);
+
+        $values = $prop->getValues();
+
+        $this->assertCount(2, $values);
+        $this->assertEquals('example value 1', $values[0]);
+        $this->assertEquals('example value 2', $values[1]);
+    }
+
+
+    public function testCanGetParam(): void
+    {
+        $prop = $this->vcard->createProp('TEL', 'example value');
+        $prop->createParam('PARAM1', 'example value 1');
+        $prop->createParam('PARAM2', 'example value 2');
+
+        $this->assertEquals('example value 1', $prop->getParam('PARAM1')->getValue());
+        $this->assertEquals('example value 2', $prop->getParam('PARAM2', 1)->getValue());
+    }
+
+
+    public function testCanGetAllParams(): void
+    {   
+        $prop = $this->vcard->createProp('TEL', 'example value');
+        $prop->createParam('PARAM1', 'example value 1');
+        $prop->createParam('PARAM2', 'example value 2');
+
+        $this->assertCount(2, $prop->getParams());
+    }
 }

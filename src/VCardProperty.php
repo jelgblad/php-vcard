@@ -96,6 +96,56 @@ class VCardProperty
 
 
   /**
+   * Get single value from vCard property.
+   * 
+   * @param   int|null    $index   Index of value to get.
+   * 
+   * @return string
+   */
+  public function getValue(int $index = 0): string
+  {
+    $values = $this->values;
+
+    return count($values) > $index ? $values[$index] : '';
+  }
+
+
+  /**
+   * Get values from vCard property.
+   * 
+   * @return string[]
+   */
+  public function getValues(): array
+  {
+    return $this->values;
+  }
+
+
+   /**
+   * Get single parameter from vCard property.
+   * 
+   * @param   string    $param_type   Parameter type name.
+   * 
+   * @return VCardPropertyParameter|null
+   */
+  public function getParam(string $param_type): VCardPropertyParameter
+  {
+    return isset($this->parameters[$param_type]) ? $this->parameters[$param_type] : null;
+  }
+
+
+  /**
+   * Get parameters from vCard property.
+   * 
+   * @return VCardPropertyParameter[]
+   */
+  public function getParams(): array
+  {
+    return array_values($this->parameters);
+  }
+
+
+  /**
    * Get property as formatted string
    *
    * @return string

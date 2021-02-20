@@ -19,6 +19,16 @@ class VCardProperty
   }
 
 
+  static function unescape_value(string $value): string
+  {
+    $value = str_replace('\\\\', '\\', $value);
+    $value = str_replace('\\,', ',', $value);
+    $value = str_replace('\\;', ';', $value);
+    
+    return $value;
+  }
+
+
 
   public $vcard;
   public $type;
@@ -47,7 +57,7 @@ class VCardProperty
     $delimiter = ';';
 
     if (isset($vcard->schema[$propType])) {
-      
+
       $schema_type = $vcard->schema[$propType];
 
       if (isset($schema_type['delimiter'])) {
@@ -56,6 +66,10 @@ class VCardProperty
     }
 
     $values = self::_parseSplit($delimiter, $valuesString);
+
+    $values = array_map(function ($value) {
+      return self::unescape_value($value);
+    }, $values);
 
     // Crate VCardProperty
     $prop = new VCardProperty($vcard, $propType, $values);
@@ -235,7 +249,7 @@ class VCardProperty
   }
 
 
-   /**
+  /**
    * Get single parameter from vCard property.
    * 
    * @param   string    $param_type   Parameter type name.

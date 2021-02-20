@@ -42,6 +42,44 @@ final class VCardTest extends TestCase
     }
 
 
+    public function testCanBeParsed(): void
+    {
+        $input = '
+        BEGIN:VCARD
+        VERSION:4.0
+        FN:John Doe
+        N:Doe;John
+        END:VCARD';
+
+        $vcards = VCard::parse($input);
+
+        $this->assertCount(1, $vcards);
+        $this->assertEquals('John Doe', $vcards[0]->getProp('FN')->getValue());
+    }
+
+
+    public function testCanBeParsedWithMultipleInputs(): void
+    {
+        $input = '
+        BEGIN:VCARD
+        VERSION:4.0
+        FN:John Doe
+        N:Doe;John
+        END:VCARD
+        BEGIN:VCARD
+        VERSION:3.0
+        FN:Jane Doe
+        N:Doe;Jane
+        END:VCARD';
+
+        $vcards = VCard::parse($input);
+
+        $this->assertCount(2, $vcards);
+        $this->assertEquals('John Doe', $vcards[0]->getProp('FN')->getValue());
+        $this->assertEquals('Jane Doe', $vcards[1]->getProp('FN')->getValue());
+    }
+
+
     public function testCanAddCustomTypeWithPrefix(): void
     {
         $vcard = new VCard();

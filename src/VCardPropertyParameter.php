@@ -24,6 +24,17 @@ class VCardPropertyParameter
   }
 
 
+  static function unescape_value(string $value): string
+  {
+    // Remove quotes around string
+    if (substr($value, 0, 1) === '"' && substr($value, strlen($value) - 1, 1) === '"') {
+      $value = substr($value, 1, strlen($value) - 2);
+    }
+
+    return $value;
+  }
+
+
 
   public $property;
   public $type;
@@ -42,8 +53,12 @@ class VCardPropertyParameter
 
     if (isset($parts[1])) {
       $values = self::_paseSplitValues($parts[1]);
+
+      $values = array_map(function ($value) {
+        return self::unescape_value($value);
+      }, $values);
     }
-  
+
     // Crate VCardPropertyParameter
     $param = new VCardPropertyParameter($prop, $parts[0], $values);
 
@@ -81,16 +96,6 @@ class VCardPropertyParameter
     }
 
     $parts[] = join('', $buffer);
-    
-    $parts = array_map(function ($part) {
-
-      // Remove quotes around string
-      if (substr($part, 0, 1) === '"' && substr($part, strlen($part)-1, 1) === '"') {
-        $part = substr($part, 1, strlen($part)-2);
-      }
-
-      return $part;
-    }, $parts);
 
     return $parts;
   }

@@ -5,6 +5,15 @@ require 'vcard.phar';
 
 use jelgblad\VCard\VCard;
 
-$vcard = VCard::parse(file_get_contents( __DIR__ . '/sample.vcf'));
+$vcards = VCard::parse(file_get_contents(__DIR__ . '/sample.vcf'));
 
-echo $vcard;
+foreach ($vcards as $i => $vcard) {
+  printf("vCard %d:\n", $i + 1);
+  printf("Name: %s\n", $vcard->getProp('FN')->getValue());
+}
+
+// Will generate following output:
+/*
+Name: Jonas Elgblad
+Name: John Doe
+*/

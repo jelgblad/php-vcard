@@ -139,13 +139,20 @@ class VCard
   }
 
 
-
-  public static function parse(string $input): VCard
+  /**
+   * Parse a string and return vCards.
+   * 
+   * @param   string    $input     Input string.
+   * @return  VCard[]
+   */
+  public static function parse(string $input): array
   {
     // Trim input
     $input = trim($input);
 
-    // Crate vCard
+    $vcards = [];
+
+    // NOTE: Needed because VCardProperty::parse() depends on VCard.
     $vcard = new VCard();
 
     // Loop lines
@@ -154,26 +161,23 @@ class VCard
       // Parse a property
       $prop = VCardProperty::parse($vcard, $lineString);
 
-      // if (
-      //   $prop->type === 'BEGIN' ||
-      //   $prop->type === 'END' ||
-      //   $prop->type === 'VERSION'
-      // ) {
-      //   continue;
-      // }
-
       switch ($prop->type) {
+        case 'BEGIN':
+          // Crate vCard
+          $vcard = new VCard();
+          break;
+        case 'END':
+          $vcards[] = $vcard;
+          break;
         case 'VERSION':
           $vcard->setOption('version', $prop->values[0]);
-        case 'BEGIN':
-        case 'END':
           break;
         default:
           $vcard->addProp($prop);
       }
     }
 
-    return $vcard;
+    return $vcards;
   }
 
 
@@ -341,7 +345,7 @@ class VCard
   public function getProp(string $prop_type, $index = 0): VCardProperty
   {
     $props = $this->getProps($prop_type);
-    
+
     return count($props) > $index ? $props[$index] : null;
   }
 

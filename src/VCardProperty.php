@@ -40,10 +40,22 @@ class VCardProperty
     $valuesString = substr($input, $valueStartIndex);
 
     $definitionParts = self::_parseSplit(';', $definition);
-    $values = self::_parseSplit(';', $valuesString);
 
     $propType = $definitionParts[0];
     $paramStrings = array_slice($definitionParts, 1);
+
+    $delimiter = ';';
+
+    if (isset($vcard->schema[$propType])) {
+      
+      $schema_type = $vcard->schema[$propType];
+
+      if (isset($schema_type['delimiter'])) {
+        $delimiter = $schema_type['delimiter'];
+      }
+    }
+
+    $values = self::_parseSplit($delimiter, $valuesString);
 
     // Crate VCardProperty
     $prop = new VCardProperty($vcard, $propType, $values);

@@ -30,6 +30,24 @@ array|null **$options**
 VCard
 
 
+### static method: **parse()**
+
+*Parse a string and return vCards.*
+
+```
+public static parse(string $input): VCard[]
+```
+
+#### Parameters
+
+string **$input**
+
+*Input string.*
+
+#### Return value
+
+VCard[]
+
 
 ### method: **__toString**()
 

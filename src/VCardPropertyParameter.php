@@ -140,6 +140,32 @@ class VCardPropertyParameter
   }
 
 
+  /**
+   * Get single value from vCard property parameter.
+   * 
+   * @param   int|null    $index   Index of value to get.
+   * 
+   * @return string
+   */
+  public function getValue(int $index = 0): string
+  {
+    $values = $this->values;
+
+    return count($values) > $index ? $values[$index] : '';
+  }
+
+
+  /**
+   * Get values from vCard property parameter.
+   * 
+   * @return string[]
+   */
+  public function getValues(): array
+  {
+    return $this->values;
+  }
+
+
 
   /**
    * Get property parameter as formatted string

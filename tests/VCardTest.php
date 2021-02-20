@@ -86,4 +86,41 @@ final class VCardTest extends TestCase
 
         $this->assertTrue(true);
     }
+
+
+    public function testCanGetProp(): void
+    {
+        $vcard = new VCard();
+
+        $vcard->createProp('TEL', 'example value 1');
+        $vcard->createProp('EMAIL', 'example value 2');
+        $vcard->createProp('EMAIL', 'example value 3');
+
+        $this->assertEquals('example value 2', $vcard->getProp('EMAIL')->getValue());
+        $this->assertEquals('example value 3', $vcard->getProp('EMAIL', 1)->getValue());
+    }
+
+
+    public function testCanGetAllProps(): void
+    {
+        $vcard = new VCard();
+
+        $vcard->createProp('TEL', 'example value 1');
+        $vcard->createProp('EMAIL', 'example value 2');
+        $vcard->createProp('EMAIL', 'example value 3');
+
+        $this->assertCount(3, $vcard->getProps());
+    }
+
+
+    public function testCanGetPropsOfType(): void
+    {
+        $vcard = new VCard();
+
+        $vcard->createProp('TEL', 'example value 1');
+        $vcard->createProp('EMAIL', 'example value 2');
+        $vcard->createProp('EMAIL', 'example value 3');
+
+        $this->assertCount(2, $vcard->getProps('EMAIL'));
+    }
 }

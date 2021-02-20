@@ -37,9 +37,7 @@ class VCardProperty
       if (!is_array($values)) $values = array($values);
 
       foreach ($values as $value) {
-        if (!empty($value)) {
-          $this->addValue($value);
-        }
+        $this->addValue($value);
       }
     }
   }

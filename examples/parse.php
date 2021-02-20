@@ -15,6 +15,8 @@ foreach ($vcards as $i => $vcard) {
 
 // Will generate following output:
 /*
+vCard 1:
 Name: Jonas Elgblad
+vCard 2:
 Name: John Doe
 */

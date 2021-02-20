@@ -30,6 +30,24 @@ array|null **$options**
 VCard
 
 
+### static method: **parse()**
+
+*Parse a string and return vCards.*
+
+```
+public static parse(string $input): VCard[]
+```
+
+#### Parameters
+
+string **$input**
+
+*Input string.*
+
+#### Return value
+
+VCard[]
+
 
 ### method: **__toString**()
 
@@ -198,6 +216,30 @@ string **$prop_type**
 array|string **$values**
 
 *Value or values to assign to property.*
+
+#### Return value
+
+VCardProperty
+
+
+
+### static method: **parse()**
+
+*Parse a string and return a vCard property.*
+
+```
+public static parse(VCard $vcard, string $input): VCardProperty
+```
+
+#### Parameters
+
+VCard **$vcard**
+
+*Parent VCard.*
+
+string **$input**
+
+*Input string.*
 
 #### Return value
 
@@ -381,6 +423,30 @@ string **$param_type**
 array|string|null **$values**
 
 *Value or values to assign to parameter.*
+
+#### Return value
+
+VCardPropertyParameter
+
+
+
+### static method: **parse()**
+
+*Parse a string and return a vCard property parameter.*
+
+```
+public static parse(VCardProperty $property, string $input): VCardPropertyParameter
+```
+
+#### Parameters
+
+VCardProperty **$property**
+
+*Parent VCardProperty.*
+
+string **$input**
+
+*Input string.*
 
 #### Return value
 

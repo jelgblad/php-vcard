@@ -24,6 +24,59 @@ final class VCardPropertyTest extends TestCase
     }
 
 
+    public function testCanBeParsedWithSingleValue(): void
+    {
+        $input = 'PROP:value';
+
+        $prop = VCardProperty::parse($this->vcard, $input);
+
+        $values = $prop->getValues();
+
+        $this->assertCount(1, $values);
+        $this->assertEquals('PROP', $prop->type);
+        $this->assertEquals('value', $values[0]);
+    }
+
+
+    public function testCanBeParsedWithMultipleValues(): void
+    {
+        $input = 'N:Doe;John';
+
+        $prop = VCardProperty::parse($this->vcard, $input);
+
+        $values = $prop->getValues();
+
+        $this->assertCount(2, $values);
+        $this->assertEquals('Doe', $values[0]);
+        $this->assertEquals('John', $values[1]);
+    }
+
+
+    public function testCanBeParsedWithEscapedSpecialChar(): void
+    {
+        $input = 'PROP:escaped\,comma';
+
+        $prop = VCardProperty::parse($this->vcard, $input);
+
+        $values = $prop->getValues();
+
+        $this->assertCount(1, $values);
+        $this->assertEquals('escaped,comma', $values[0]);
+    }
+
+
+    public function testCanBeParsedWithParam(): void
+    {
+        $input = 'PROP;TYPE=test:value';
+
+        $prop = VCardProperty::parse($this->vcard, $input);
+
+        $this->assertEquals('PROP', $prop->type);
+        $this->assertEquals('value', $prop->getValue());
+        $this->assertEquals('test', $prop->getParam('TYPE')->getValue());
+    }
+
+
     public function testOutputEmptyStringIfValueIsEmpty(): void
     {
         $this->vcard->setOption('no_empty_props', TRUE);

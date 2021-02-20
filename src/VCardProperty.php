@@ -46,7 +46,7 @@ class VCardProperty
     $paramStrings = array_slice($definitionParts, 1);
 
     // Crate VCardProperty
-    $prop = new VCardProperty($vcard, $propType,  $values);
+    $prop = new VCardProperty($vcard, $propType, $values);
 
     // Loop params
     foreach ($paramStrings as $paramString) {
@@ -103,18 +103,18 @@ class VCardProperty
     $parts = [];
     $buffer = [];
 
-    // Loop chars and find index where value begins
+    // Loop chars
     for ($i = 0; $i < count($chars); $i++) {
 
       $char = $chars[$i];
 
-      if ($inQuotes && $char === '"') {
+      if ($inQuotes && $char === '"' && !($i - 1 >= 0  && $chars[$i - 1] === '\\')) {
         $inQuotes = false;
-      } else if (!$inQuotes && $char === '"') {
+      } else if (!$inQuotes && $char === '"' && !($i - 1 >= 0 && $chars[$i - 1] === '\\')) {
         $inQuotes = true;
       }
 
-      if (!$inQuotes && $char === $delimiter && $i - 1 >= 0 && $chars[$i - 1] !== '\\') {
+      if (!$inQuotes && $char === $delimiter && !($i - 1 >= 0 && $chars[$i - 1] === '\\')) {
         $parts[] = join('', $buffer);
         $buffer = [];
       } else {

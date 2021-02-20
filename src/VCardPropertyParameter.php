@@ -66,13 +66,13 @@ class VCardPropertyParameter
 
       $char = $chars[$i];
 
-      if ($inQuotes && $char === '"' && $chars[$i - 1] !== '\\') {
+      if ($inQuotes && $char === '"' && !($i - 1 >= 0  && $chars[$i - 1] === '\\')) {
         $inQuotes = false;
-      } else if (!$inQuotes && $char === '"' && $i - 1 >= 0 && $chars[$i - 1] !== '\\') {
+      } else if (!$inQuotes && $char === '"' && !($i - 1 >= 0 && $chars[$i - 1] === '\\')) {
         $inQuotes = true;
       }
 
-      if (!$inQuotes && $char === ',' && $chars[$i - 1] !== '\\') {
+      if (!$inQuotes && $char === ',' && !($i - 1 >= 0 && $chars[$i - 1] === '\\')) {
         $parts[] = join('', $buffer);
         $buffer = [];
       } else {

@@ -5,6 +5,7 @@ namespace jelgblad\VCard;
 class VCard
 {
 
+  const VCARD_2 = '2.1';
   const VCARD_3 = '3.0';      // https://tools.ietf.org/html/rfc2425
                               // https://tools.ietf.org/html/rfc2426
   const VCARD_4 = '4.0';      // https://tools.ietf.org/html/rfc6350
@@ -28,43 +29,61 @@ class VCard
       * Default cardinality is '*'.
       */
 
+      self::VCARD_2 => [
+        'SOURCE' => [],
+        'FN' => [],
+        'N' => [
+          'cardinality' => '1*',  // Marked as REQUIRED in vCard 2.1
+          'delimiter' => ';'
+        ],
+        'PHOTO' => [],
+        'BDAY' => [],
+        'ADR' => [
+          'delimiter' => ';'
+        ],
+        'LABEL' => [],
+        'TEL' => [],
+        'EMAIL' => [],
+        'MAILER' => [],
+        'TZ' => [],
+        'GEO' => [],
+        'TITLE' => [],
+        'ROLE' => [],
+        'LOGO' => [],
+        'AGENT' => [],
+        'ORG' => [],
+        'CATEGORIES' => [],
+        'NOTE' => [],
+        'REV' => [],
+        'SOUND' => [],
+        'URL' => [],
+        'UID' => [],
+        'KEY' => []
+      ],
+
     self::VCARD_3 => [
-      'SOURCE' => [],
       'NAME' => [],
       'FN' => [
         'cardinality' => '1*'   // Marked as REQUIRED in vCard 3.0
       ],
-      'N' => [
-        'cardinality' => '1*',  // Marked as REQUIRED in vCard 3.0
-        'delimiter' => ';'
-      ],
-      'NICKNAME' => [],
-      'PHOTO' => [],
-      'BDAY' => [],
-      'ADR' => [
-        'delimiter' => ';'
-      ],
-      'LABEL' => [],
-      'TEL' => [],
-      'EMAIL' => [],
-      'MAILER' => [],
-      'TZ' => [],
-      'GEO' => [],
-      'TITLE' => [],
-      'ROLE' => [],
-      'LOGO' => [],
-      'AGENT' => [],
-      'ORG' => [],
-      'CATEGORIES' => [],
-      'NOTE' => [],
-      'PRODID' => [],
-      'REV' => [],
-      'SORT-STRING' => [],
-      'SOUND' => [],
-      'URL' => [],
-      'UID' => [],
       'CLASS' => [],
-      'KEY' => []
+      'NICKNAME' => [],
+      'PRODID' => [],
+      'SORT-STRING' => [],
+
+      // https://tools.ietf.org/html/rfc4770
+      'IMPP' => [],
+
+      // https://tools.ietf.org/html/rfc6715
+      'EXPERTISE' => [],
+      'HOBBY' => [],
+      'INTEREST' => [],
+      'ORG-DIRECTORY' => [],
+
+      // https://tools.ietf.org/html/rfc6474
+      'BIRTHPLACE' => [],       
+      'DEATHDATE' => [],
+      'DEATHPLACE' => []
     ],
 
     self::VCARD_4 => [
@@ -170,7 +189,7 @@ class VCard
           $vcards[] = $vcard;
           break;
         case 'VERSION':
-          $vcard->setOption('version', $prop->values[0]);
+          $vcard->setOption('version', $prop->getValue());
           break;
         default:
           $vcard->addProp($prop);

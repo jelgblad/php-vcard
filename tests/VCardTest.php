@@ -18,6 +18,14 @@ final class VCardTest extends TestCase
     }
 
 
+    public function testCanBeCreatedWithVersion2(): void
+    {
+        new VCard(['version' => '2.1']);
+
+        $this->assertTrue(true);
+    }
+
+
     public function testCanBeCreatedWithVersion3(): void
     {
         new VCard(['version' => '3.0']);

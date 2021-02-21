@@ -32,8 +32,8 @@ class VCardProperty
 
   public $vcard;
   public $type;
-  public $parameters = array();
-  public $values = array();
+  private $parameters = array();
+  private $values = array();
 
 
 
